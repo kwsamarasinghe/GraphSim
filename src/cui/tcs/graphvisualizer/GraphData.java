@@ -1,5 +1,6 @@
 package cui.tcs.graphvisualizer;
 
+import java.awt.Color;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.Set;

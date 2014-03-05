@@ -30,7 +30,7 @@ public class AnchorManager {
 	public void placeAnchors(){
 		//Should pick a random anchor first to start the process
 		Random rand = new Random();
-		int anchorIndex=rand.nextInt()%networkgraph.getVertices().size();
+		int anchorIndex=rand.nextInt(networkgraph.getVertices().size());
 		Node rootAnchor = (Node)networkgraph.getVertices().toArray()[anchorIndex];
 		anchors.add(rootAnchor);
 		
@@ -60,7 +60,8 @@ public class AnchorManager {
 	private Node randomNeighbor(Node current){
 		Vector<Node> neighbors = networkgraph.getNeighbors(current);
 		Random rand = new Random();
-		Node randomNeighbor = (Node)neighbors.get(rand.nextInt()%neighbors.size());
+		int neighborIndex = rand.nextInt(neighbors.size());
+		Node randomNeighbor = (Node)neighbors.get(neighborIndex);
 		return randomNeighbor;
 	}
 
