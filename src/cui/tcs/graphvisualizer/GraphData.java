@@ -1,14 +1,17 @@
 package cui.tcs.graphvisualizer;
 
-import java.awt.Color;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
+import org.gephi.graph.api.Edge;
+import org.gephi.graph.api.Node;
+
 import cui.tcs.graph.NetworkGraph;
-import cui.tcs.graph.Edge;
-import cui.tcs.graph.Node;
+import cui.tcs.graph.EdgeImpl;
+import cui.tcs.graph.NodeImpl;
 
 
 public class GraphData {
@@ -25,9 +28,12 @@ public class GraphData {
 	 */
 	public Vector<Point2D> getPoints(){
 		Vector<Point2D> points=new Vector<Point2D>();
-		Set<Node> vertices = graph.getVertices();
-		for (Node vertex : vertices) {
-			Point2D point = new Point2D.Double(vertex.getX(), vertex.getY());
+		Iterator<Node> nodes =  graph.nodes();
+		
+		while(nodes.hasNext()){
+			NodeImpl node=(NodeImpl)nodes.next();
+			
+			Point2D point = new Point2D.Double(node.x(), node.y());
 			points.add(point);
 		}
 		
@@ -40,10 +46,13 @@ public class GraphData {
 	 */
 	public Vector<Line2D> getEdgeSegments(){
 		Vector<Line2D> edgeSegments=new Vector<Line2D>();
-		Set<Edge> edges = graph.getEdges();
-		for(Edge edge: edges){
-			Point2D p1 = new Point2D.Double(edge.getNodes()[0].getX(), edge.getNodes()[0].getY());
-			Point2D p2 = new Point2D.Double(edge.getNodes()[1].getX(), edge.getNodes()[1].getY());
+		Iterator<Edge> edges =  graph.edges();
+		
+		while(edges.hasNext()){
+			EdgeImpl edge=(EdgeImpl)edges.next();
+						
+			Point2D p1 = new Point2D.Double(edge.getSource().x(), edge.getTarget().y());
+			Point2D p2 = new Point2D.Double(edge.getSource().x(), edge.getTarget().y());
 			Line2D edgeSegment= new Line2D.Double(p1, p2);
 			edgeSegments.add(edgeSegment);
 		}

@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import cui.tcs.graph.NetworkGraph;
-import cui.tcs.graph.Node;
+import cui.tcs.graph.NodeImpl;
 import cui.tcs.routing.Message;
 
 /**
@@ -16,13 +16,13 @@ public class AnchorManager {
 
 	private NetworkGraph networkgraph;
 	
-	private Vector<Node> anchors = new Vector<Node>();
+	private Vector<NodeImpl> anchors = new Vector<NodeImpl>();
 	
 	public AnchorManager(NetworkGraph ng) {
 		this.networkgraph = ng;
 	}
 	
-	public Vector<Node> getAnchors(){
+	public Vector<NodeImpl> getAnchors(){
 		return anchors;
 	}
 	
@@ -31,17 +31,17 @@ public class AnchorManager {
 		//Should pick a random anchor first to start the process
 		Random rand = new Random();
 		int anchorIndex=rand.nextInt(networkgraph.getVertices().size());
-		Node rootAnchor = (Node)networkgraph.getVertices().toArray()[anchorIndex];
+		NodeImpl rootAnchor = (NodeImpl)networkgraph.getVertices().toArray()[anchorIndex];
 		anchors.add(rootAnchor);
 		
 		//First the root anchor performs a random walk of 20 hops to pick the second anchor
 		Message message = new Message();
 		message.setHeader("INITSEL");
 
-		Node next = randomNeighbor(rootAnchor);
+		NodeImpl next = randomNeighbor(rootAnchor);
 		rootAnchor.unicast(next, message);
 		for(int i=0;i<19;i++){
-			Node newNext = randomNeighbor(rootAnchor);
+			NodeImpl newNext = randomNeighbor(rootAnchor);
 			next.unicast(newNext,message);
 			next = newNext;
 		}
@@ -57,11 +57,11 @@ public class AnchorManager {
 	 * @param current - current node
 	 * @return Neighbor node randomly picked from the neighbor list
 	 */
-	private Node randomNeighbor(Node current){
-		Vector<Node> neighbors = networkgraph.getNeighbors(current);
+	private NodeImpl randomNeighbor(NodeImpl current){
+		Vector<NodeImpl> neighbors = networkgraph.getNeighbors(current);
 		Random rand = new Random();
 		int neighborIndex = rand.nextInt(neighbors.size());
-		Node randomNeighbor = (Node)neighbors.get(neighborIndex);
+		NodeImpl randomNeighbor = (NodeImpl)neighbors.get(neighborIndex);
 		return randomNeighbor;
 	}
 

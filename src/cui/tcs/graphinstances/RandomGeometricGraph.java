@@ -1,58 +1,69 @@
 package cui.tcs.graphinstances;
 
-import java.util.Set;
+import java.util.Iterator;
 
-import org.jgrapht.graph.SimpleGraph;
+import org.gephi.graph.api.Node;
 
-import cui.tcs.graph.Edge;
-import cui.tcs.graph.Node;
+import cui.tcs.graph.EdgeImpl;
+import cui.tcs.graph.NetworkGraph;
+import cui.tcs.graph.NodeImpl;
 
-public class RandomGeometricGraph extends SimpleGraph<Node, Edge>{
+public class RandomGeometricGraph extends NetworkGraph{
 
-	private static final long serialVersionUID = 6632027566668199940L;
-	private int coverageUnit=50;
+	// Coverage unit for the random geometric graph
+	private int coverage=50;
 	
-	public RandomGeometricGraph(Class<? extends Edge> edgeClass) {
-		super(edgeClass);
+	// Width of the area of node distribution
+	private int width;
+	
+	// Height of the area of the node distribution
+	private int height;
+	
+	public RandomGeometricGraph(int totalNodes, int width, int height, int coverage) {
+		super(totalNodes);
+		this.width=width;
+		this.height=height;
+		this.coverage=coverage;
 	}
 
 	//Initializes the random nodes and edges 
-	public void generate(int totalNodes,int areaWidth, int areaHeight, int coverage){
-		coverageUnit = coverage;
-		
-		int x,y;
+	public void generate(){
+		float x,y;
 		for(int i=0;i<totalNodes;i++){
-			x = (int) (Math.random() * areaWidth);
-			y = (int) (Math.random() * areaHeight);
-			Node n = new Node(x,y);
-			n.setID(i);
-			addVertex(n);
+			x = (float) (Math.random() * width);
+			y = (float) (Math.random() * height);
+			NodeImpl node = new NodeImpl();
+			node.setX(x);
+			node.setY(y);
+			addNode(node);
 		}
 		
 		//Adds the edges according to random geometric connectivity
-		Object[] nodes = vertexSet().toArray();
-		for(int j=0;j<nodes.length;j++){
-			for(int k=0;k<nodes.length;k++){
-				Node u = (Node)nodes[j];
-				Node v = (Node)nodes[k];
-				if(!u.equals(v)){
-					if(u.getDistanceTo(v)<=coverageUnit){
-						if(Math.random()<0.5){
-							addEdge(u, v,new Edge(u, v, u.getDistanceTo(v)));
-							addEdge(v, u,new Edge(v, u, u.getDistanceTo(v)));
-						}
-					}
+		Iterator<Node> nodes=nodes();
+		Iterator<Node> nodes_=nodes();
+		
+		while(nodes.hasNext()){
+			NodeImpl u=(NodeImpl)nodes.next();
+			while(nodes_.hasNext()){
+				NodeImpl v=(NodeImpl)nodes_.next();
+				if(getDistance(u, v)<=coverage){
+					EdgeImpl e=new EdgeImpl(u, v);
+					addEdge(e);
 				}
 			}
 		}
 	}
 	
-	public Set<Node> getNodes(){
-		return vertexSet();
-	}
 	
-	public Set<Edge> getEdges(){
-		return edgeSet();
+	private double getDistance(NodeImpl u, NodeImpl v){
+		float x1=u.x();
+		float y1=u.y();
+		
+		float x2=v.x();
+		float y2=v.y();
+		
+		double d=Math.sqrt(Math.pow((x1-x2),2)+Math.pow((y1-y2),2));
+		return (float)d;
 	}
 }
 
