@@ -3,7 +3,6 @@ package cui.tcs.graphvisualizer;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.Vector;
 
 import org.gephi.graph.api.Edge;
@@ -28,7 +27,7 @@ public class GraphData {
 	 */
 	public Vector<Point2D> getPoints(){
 		Vector<Point2D> points=new Vector<Point2D>();
-		Iterator<Node> nodes =  graph.nodes();
+		Iterator<Node> nodes =  graph.getNodes().iterator();
 		
 		while(nodes.hasNext()){
 			NodeImpl node=(NodeImpl)nodes.next();
@@ -46,7 +45,7 @@ public class GraphData {
 	 */
 	public Vector<Line2D> getEdgeSegments(){
 		Vector<Line2D> edgeSegments=new Vector<Line2D>();
-		Iterator<Edge> edges =  graph.edges();
+		Iterator<Edge> edges =  graph.getEdges().iterator();
 		
 		while(edges.hasNext()){
 			EdgeImpl edge=(EdgeImpl)edges.next();

@@ -39,8 +39,8 @@ public class RandomGeometricGraph extends NetworkGraph{
 		}
 		
 		//Adds the edges according to random geometric connectivity
-		Iterator<Node> nodes=nodes();
-		Iterator<Node> nodes_=nodes();
+		Iterator<Node> nodes=getNodes().iterator();
+		Iterator<Node> nodes_=getNodes().iterator();
 		
 		while(nodes.hasNext()){
 			NodeImpl u=(NodeImpl)nodes.next();

@@ -2,7 +2,7 @@ package cui.tcs.graph;
 
 
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.gephi.graph.api.Node;
@@ -13,10 +13,10 @@ import org.gephi.graph.api.GraphModel;
 import org.gephi.graph.api.GraphView;
 import org.gephi.graph.api.Interval;
 import org.gephi.graph.api.UndirectedGraph;
-import org.gephi.graph.impl.GraphFactoryImpl;
 
 /**
  * NetworkGraph class which is an extension of an undirected graph
+ * An adjacency list implementation of the graph 
  * @author Kasun Samarasinghe
  *
  * @param <V> Vertex
@@ -24,11 +24,16 @@ import org.gephi.graph.impl.GraphFactoryImpl;
  */
 public abstract class NetworkGraph implements UndirectedGraph{
 	
+	//Adjacency list
+	private LinkedList<LinkedList<Node>> adjList; 
+	
 	//Total nodes
 	protected int totalNodes;
 	
 	public NetworkGraph(int totalNodes){
 		this.totalNodes=totalNodes;
+	
+		//Initializes the lists
 	}
 	
 	/**
@@ -396,8 +401,5 @@ public abstract class NetworkGraph implements UndirectedGraph{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-	
 
 }
