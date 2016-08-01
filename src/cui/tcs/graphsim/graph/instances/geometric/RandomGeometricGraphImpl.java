@@ -107,7 +107,7 @@ public class RandomGeometricGraphImpl implements ConnectivityGraph {
 		u.addEdge(u.getID() + "" + v.getID(), v);
 
 		// Adds v to u's neighbors
-		v.addEdge(v.getID() + "" + u.getID(), u);
+		//v.addEdge(v.getID() + "" + u.getID(), u);
 
 		// Adds the edge to the edge list
 		edges.add((GeometricEdgeImpl) edge);

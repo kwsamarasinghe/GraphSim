@@ -84,7 +84,7 @@ public class GeometricNodeImpl implements Vertex{
 		GeometricNodeImpl neighbor=(GeometricNodeImpl)v;
 		Edge neighborEdge=new GeometricEdgeImpl(this,neighbor);
 		edges.add(neighborEdge);
-		return null;
+		return neighborEdge;
 	}
 
 	@Override
