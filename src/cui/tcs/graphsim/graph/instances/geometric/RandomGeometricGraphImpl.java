@@ -14,6 +14,8 @@ import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.util.io.graphml.GraphMLWriter;
 
 import cui.tcs.graphsim.graph.ConnectivityGraph;
+import cui.tcs.graphsim.samples.RandomWalkProcess;
+import cui.tcs.graphsim.samples.SamplePacket;
 
 /**
  * Random geometric graph is a connectivity model of a wireless ad-hoc network
@@ -23,7 +25,7 @@ import cui.tcs.graphsim.graph.ConnectivityGraph;
  * @author Kasun Samarasinghe
  *
  */
-public class RandomGeometricGraphImpl implements ConnectivityGraph {
+public class RandomGeometricGraphImpl<P> implements ConnectivityGraph {
 
 	/**
 	 * Set of nodes
@@ -54,9 +56,13 @@ public class RandomGeometricGraphImpl implements ConnectivityGraph {
 		// nodes
 		double x, y;
 		for (int i = 0; i < totalNodes; i++) {
+			//Node process
+			RandomWalkProcess<SamplePacket> process=new RandomWalkProcess<SamplePacket>();
 			x = (double) (Math.random() * width);
 			y = (double) (Math.random() * height);
-			GeometricNodeImpl node = new GeometricNodeImpl(x, y);
+			GeometricNodeImpl<SamplePacket> node = new GeometricNodeImpl<SamplePacket>(x, y,process);
+			
+			//Node attributes
 			node.setID(i);
 			node.setProperty("x", x);
 			node.setProperty("y", y);
@@ -67,7 +73,7 @@ public class RandomGeometricGraphImpl implements ConnectivityGraph {
 		for (Vertex u : nodes) {
 			for (Vertex v : nodes) {
 				if (!u.equals(v)) {
-					if (((GeometricNodeImpl) u).distanceTo((GeometricNodeImpl) v) <= coverage) {
+					if (((GeometricNodeImpl<P>) u).distanceTo((GeometricNodeImpl<P>) v) <= coverage) {
 						// Puts the edge in the adjacency list
 						GeometricEdgeImpl edge = new GeometricEdgeImpl((GeometricNodeImpl) u, (GeometricNodeImpl) v);
 						addEdge(edge, u, v, null);
@@ -145,14 +151,15 @@ public class RandomGeometricGraphImpl implements ConnectivityGraph {
 	}
 
 	/**
-	 * O(n) time node search
+	 * O(n) time node search by ID
 	 * 
 	 * @param u
-	 * @return
+	 * @return vertex associated with ID
 	 */
 	public Vertex getVertex(Object u) {
+		int ID=(int)u;
 		for (Vertex v : nodes) {
-			if (v.equals(u)) {
+			if ((int)v.getId()==ID) {
 				return v;
 			}
 		}

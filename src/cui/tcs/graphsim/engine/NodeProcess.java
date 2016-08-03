@@ -7,7 +7,7 @@ package cui.tcs.graphsim.engine;
  * @param <P> packet
  */
 public interface NodeProcess<P> extends Runnable{
-
+	
 	/**
 	 * Handles the incoming packet to this node
 	 * @param packet
