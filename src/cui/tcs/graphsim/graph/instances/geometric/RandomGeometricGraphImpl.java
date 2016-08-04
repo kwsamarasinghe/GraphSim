@@ -57,10 +57,10 @@ public class RandomGeometricGraphImpl<P> implements ConnectivityGraph {
 		double x, y;
 		for (int i = 0; i < totalNodes; i++) {
 			//Node process
-			RandomWalkProcess<SamplePacket> process=new RandomWalkProcess<SamplePacket>();
+			RandomWalkProcess process=new RandomWalkProcess();
 			x = (double) (Math.random() * width);
 			y = (double) (Math.random() * height);
-			GeometricNodeImpl<SamplePacket> node = new GeometricNodeImpl<SamplePacket>(x, y,process);
+			GeometricNodeImpl node = new GeometricNodeImpl(x, y,process);
 			
 			//Node attributes
 			node.setID(i);
@@ -73,7 +73,7 @@ public class RandomGeometricGraphImpl<P> implements ConnectivityGraph {
 		for (Vertex u : nodes) {
 			for (Vertex v : nodes) {
 				if (!u.equals(v)) {
-					if (((GeometricNodeImpl<P>) u).distanceTo((GeometricNodeImpl<P>) v) <= coverage) {
+					if (((GeometricNodeImpl) u).distanceTo((GeometricNodeImpl) v) <= coverage) {
 						// Puts the edge in the adjacency list
 						GeometricEdgeImpl edge = new GeometricEdgeImpl((GeometricNodeImpl) u, (GeometricNodeImpl) v);
 						addEdge(edge, u, v, null);

@@ -18,7 +18,7 @@ import cui.tcs.graphsim.graph.Node;
  * @author Kasun Samarasinghe
  *
  */
-public class GeometricNodeImpl<P> extends Node<P>{
+public class GeometricNodeImpl extends Node{
 	
 	//Unique ID
 	private int id;
@@ -40,7 +40,7 @@ public class GeometricNodeImpl<P> extends Node<P>{
 	 * @param x - x coordinate
 	 * @param y - y coordinate
 	 */
-	public GeometricNodeImpl(double x, double y, NodeProcess<P> process) {
+	public GeometricNodeImpl(double x, double y, NodeProcess process) {
 		super(process);
 		this.x=x;
 		this.y=y;
