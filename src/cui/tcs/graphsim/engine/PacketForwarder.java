@@ -2,28 +2,42 @@ package cui.tcs.graphsim.engine;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import com.tinkerpop.blueprints.Graph;
+
+import cui.tcs.graphsim.graph.Node;
+import cui.tcs.graphsim.samples.RandomWalkProcess;
+
 /**
  * Packet forwarder which forwards packets to the respective destination
  * @author Kasun Samarasinghe
  *
- * @param <T> packet
+ * @param <T> packet	
  */
-public class PacketForwarder<P> implements Runnable{
+public class PacketForwarder implements Runnable{
 
-	private ConcurrentLinkedQueue<P> packetQueue;
+	//Graph
+	private Graph graph;
 	
-	public PacketForwarder(){
-		packetQueue = new ConcurrentLinkedQueue<P>();
+	//Packet queue
+	private ConcurrentLinkedQueue<Packet> packetQueue;
+	
+	public PacketForwarder(Graph graph){
+		packetQueue = new ConcurrentLinkedQueue<Packet>();
 	}
 
 	/**
-	 * Packet forwarder process which continously look for new packets and forward them
+	 * Packet forwarder process which continuously look for new packets and forward them
 	 */
 	public void run() {
 		
 		while(true){
 			while(!packetQueue.isEmpty()){
-				P packet=packetQueue.peek();
+				Packet packet=packetQueue.peek();
+				
+				int destination=packet.getDestination();
+				Node destinationNode=(Node)graph.getVertex(destination);
+				NodeProcess process=destinationNode.getProcess();
+				process.handlePacket(packet);
 			}
 		}
 	}
