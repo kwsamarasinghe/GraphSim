@@ -3,8 +3,8 @@ package cui.tcs.graphsim.engine;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.tinkerpop.blueprints.Graph;
+import com.tinkerpop.blueprints.Vertex;
 
-import cui.tcs.graphsim.graph.Node;
 import cui.tcs.graphsim.samples.RandomWalkProcess;
 
 /**
@@ -35,9 +35,10 @@ public class PacketForwarder implements Runnable{
 				Packet packet=packetQueue.peek();
 				
 				int destination=packet.getDestination();
-				Node destinationNode=(Node)graph.getVertex(destination);
-				NodeProcess process=destinationNode.getProcess();
-				process.handlePacket(packet);
+				Vertex destinationNode=graph.getVertex(destination);
+				
+				
+				//process.handlePacket(packet);
 			}
 		}
 	}

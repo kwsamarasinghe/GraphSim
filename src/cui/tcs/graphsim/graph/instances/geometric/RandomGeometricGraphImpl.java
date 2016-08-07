@@ -14,8 +14,6 @@ import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.util.io.graphml.GraphMLWriter;
 
 import cui.tcs.graphsim.graph.ConnectivityGraph;
-import cui.tcs.graphsim.samples.RandomWalkProcess;
-import cui.tcs.graphsim.samples.SamplePacket;
 
 /**
  * Random geometric graph is a connectivity model of a wireless ad-hoc network
@@ -57,11 +55,10 @@ public class RandomGeometricGraphImpl<P> implements ConnectivityGraph {
 		double x, y;
 		for (int i = 0; i < totalNodes; i++) {
 			//Node process
-			RandomWalkProcess process=new RandomWalkProcess();
 			x = (double) (Math.random() * width);
 			y = (double) (Math.random() * height);
-			GeometricNodeImpl node = new GeometricNodeImpl(x, y,process);
-			
+			GeometricNodeImpl node = new GeometricNodeImpl(x, y);
+
 			//Node attributes
 			node.setID(i);
 			node.setProperty("x", x);

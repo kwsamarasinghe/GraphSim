@@ -21,11 +21,10 @@ public class Simulator {
 		// Starts the REST service
 		graphServer = new GraphServer(randomGeometricGraph);
 		graphServer.start();
-
+		
 		//Starts the engine
-		Engine engine = new Engine(randomGeometricGraph);
+		engine = new Engine(randomGeometricGraph);
 		engine.start();
-
 	}
 
 	public void stop() {
@@ -34,6 +33,7 @@ public class Simulator {
 	}
 
 	public static void main(String args[]) {
+		System.out.println("Starting the simlation");
 		Simulator simulator = new Simulator();
 		simulator.start();
 		

@@ -1,43 +1,44 @@
 package cui.tcs.graphsim.samples;
 
-import org.apache.commons.logging.impl.Log4JLogger;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import com.tinkerpop.blueprints.Vertex;
 
 import cui.tcs.graphsim.engine.NodeProcess;
 import cui.tcs.graphsim.engine.Packet;
-import cui.tcs.graphsim.graph.Node;
 
+/**
+ * Simple random walk node process just forwards the packets to a neighboring
+ * node
+ * 
+ * @author Kasun Samarasinghe
+ *
+ */
 public class RandomWalkProcess implements NodeProcess {
 
-	private Node node;
+	// Packet buffer
+	private ConcurrentLinkedQueue<Packet> buffer;
 
-	private Log4JLogger logger = new Log4JLogger();
-
-	/**
-	 * Sets the node
-	 * 
-	 * @param node
-	 */
-	public void setNode(Node node) {
-		this.node = node;
+	//Associated node
+	private Vertex vertex;
+	
+	public RandomWalkProcess(Vertex vertex){
+		this.vertex=vertex;
+		buffer=new ConcurrentLinkedQueue<Packet>();
 	}
-
+	
 	/**
 	 * Node process
 	 */
 	public void run() {
-		logger.debug("Starting the node process");
-		if (node == null) {
-			logger.debug("A node must be associated with the node process");
-			System.exit(1);
-		} else {
+		
+		System.out.println("starting the node process for "+vertex.getId());
+		// sample process which generates a packet and performs a random
+		// walk
+		if ((int) vertex.getId() == 0) {
 
-			// sample process which generates a packet and performs a random
-			// walk
-			System.out.println("Starting process ");
-			if ((int) node.getId() == 0) {
-				
-			}
 		}
+
 	}
 
 	public void handlePacket(Packet packet) {
@@ -46,4 +47,22 @@ public class RandomWalkProcess implements NodeProcess {
 
 	}
 
+}
+
+/**
+ * Packet handler thread which processes packets from the buffer and process
+ */
+class PacketHandler implements Runnable{
+	
+	ConcurrentLinkedQueue<Packet> buffer;
+	
+	public PacketHandler(ConcurrentLinkedQueue<Packet> buffer){
+		this.buffer=buffer;
+	}
+	
+	public void run(){
+		while(!buffer.isEmpty()){
+			
+		}
+	}
 }

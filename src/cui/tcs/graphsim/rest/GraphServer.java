@@ -1,6 +1,6 @@
 package cui.tcs.graphsim.rest;
 
-import org.apache.commons.logging.impl.Log4JLogger;
+import org.apache.log4j.Logger;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
 
@@ -14,11 +14,10 @@ public class GraphServer  {
 	//REST component
 	private Component component;
 	
-	private Log4JLogger logger;
+	//final static Logger logger = Logger.getLogger(GraphServer.class);
 	
 	public GraphServer(ConnectivityGraph graph) {
 		this.graph = graph;
-		logger=new Log4JLogger();
 	}
 
 	public boolean start() {
@@ -27,7 +26,7 @@ public class GraphServer  {
 			component.getServers().add(Protocol.HTTP, 8111);
 			component.getDefaultHost().attach("/graph", new GraphRouter(graph));
 			component.start();
-			logger.debug("graph Server Started on port 8111");
+			//logger.debug("graph Server Started on port 8111");
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
