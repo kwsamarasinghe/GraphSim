@@ -109,6 +109,21 @@ public class GeometricNodeImpl implements Vertex{
 		return neighbors;
 	}
 
+	public int getNeighborhoodSize(){
+		return edges.size();
+	}
+	
+	public boolean isNeighbor(GeometricNodeImpl node){
+		for(Edge edge: edges){
+			GeometricNodeImpl target=((GeometricEdgeImpl)edge).getTarget();
+			if(node == target){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	@Override
 	public VertexQuery query() {
 		// TODO Auto-generated method stub

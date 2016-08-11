@@ -24,14 +24,14 @@ public class Engine {
 	 */
 	public Engine(Graph graph) {
 		// initializes the packet forwarder
-		packetForwarder = new PacketForwarder(graph);
+		packetForwarder = new PacketForwarder(simulationContext);
 		
 		//Initializes the context
 		simulationContext = new SimulationContext(packetForwarder);
 		
 		//Initializes the node processes and register them in the context
 		for(Vertex node: graph.getVertices()){
-			NodeProcess nodeProcess=new RandomWalkProcess(node);
+			NodeProcess nodeProcess=new RandomWalkProcess(node,simulationContext);
 			simulationContext.registerNodeProcess((int)node.getId(), nodeProcess);
 		}
 	}

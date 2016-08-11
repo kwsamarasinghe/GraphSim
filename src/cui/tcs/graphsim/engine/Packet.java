@@ -11,12 +11,18 @@ public class Packet {
 	
 	protected int source;
 	
+	protected int nextHop;
+	
 	public void setSource(int source){
 		this.source=source;
 	}
 	
 	public void setDesnation(int desnation){
 		this.destination=desnation;
+	}
+	
+	public void setNextHop(int nextHop){
+		this.nextHop=nextHop;
 	}
 	
 	
@@ -26,5 +32,9 @@ public class Packet {
 	
 	public int getDestination(){
 		return destination;
+	}
+	
+	public int getNextHop(){
+		return nextHop;
 	}
 }

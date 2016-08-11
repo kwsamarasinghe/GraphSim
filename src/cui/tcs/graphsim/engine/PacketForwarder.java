@@ -2,10 +2,6 @@ package cui.tcs.graphsim.engine;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.tinkerpop.blueprints.Graph;
-import com.tinkerpop.blueprints.Vertex;
-
-import cui.tcs.graphsim.samples.RandomWalkProcess;
 
 /**
  * Packet forwarder which forwards packets to the respective destination
@@ -16,12 +12,12 @@ import cui.tcs.graphsim.samples.RandomWalkProcess;
 public class PacketForwarder implements Runnable{
 
 	//Graph
-	private Graph graph;
+	private SimulationContext context;
 	
 	//Packet queue
 	private ConcurrentLinkedQueue<Packet> packetQueue;
 	
-	public PacketForwarder(Graph graph){
+	public PacketForwarder(SimulationContext context){
 		packetQueue = new ConcurrentLinkedQueue<Packet>();
 	}
 
@@ -34,12 +30,16 @@ public class PacketForwarder implements Runnable{
 			while(!packetQueue.isEmpty()){
 				Packet packet=packetQueue.peek();
 				
-				int destination=packet.getDestination();
-				Vertex destinationNode=graph.getVertex(destination);
+				int nextHop=packet.getNextHop();
+				NodeProcess nextHopProcess=context.getProcess(nextHop);
 				
-				
-				//process.handlePacket(packet);
+				nextHopProcess.handlePacket(packet);
 			}
 		}
+	}
+	
+	public void sendPacket(Packet packet){
+		System.out.println("Packet is placed on the queue: destination "+packet.getDestination());
+		packetQueue.add(packet);
 	}
 }
