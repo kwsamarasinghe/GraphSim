@@ -13,6 +13,8 @@ public class Packet {
 	
 	protected int nextHop;
 	
+	protected int ttl;
+	
 	public void setSource(int source){
 		this.source=source;
 	}
@@ -25,6 +27,9 @@ public class Packet {
 		this.nextHop=nextHop;
 	}
 	
+	public void setTTL(int ttl){
+		this.ttl=ttl;
+	}
 	
 	public int getSource(){
 		return source;
@@ -36,5 +41,9 @@ public class Packet {
 	
 	public int getNextHop(){
 		return nextHop;
+	}
+	
+	public int getTTL(){
+		return ttl;
 	}
 }

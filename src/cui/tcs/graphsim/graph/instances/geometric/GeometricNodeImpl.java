@@ -9,8 +9,6 @@ import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.VertexQuery;
 
-import cui.tcs.graphsim.engine.NodeProcess;
-
 /**
  * A node for a geometric graph with properties such as geometric coordinates
  * @author Kasun Samarasinghe
@@ -121,6 +119,16 @@ public class GeometricNodeImpl implements Vertex{
 			}
 		}
 		
+		return false;
+	}
+	
+	public boolean isNeighbor(int nodeID){
+		for(Edge edge: edges){
+			GeometricNodeImpl target=((GeometricEdgeImpl)edge).getTarget();
+			if(nodeID == target.getID()){
+				return true;
+			}
+		}
 		return false;
 	}
 	
