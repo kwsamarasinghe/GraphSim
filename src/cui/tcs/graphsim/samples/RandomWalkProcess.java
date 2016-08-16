@@ -9,7 +9,6 @@ import cui.tcs.graphsim.engine.NodeProcess;
 import cui.tcs.graphsim.engine.Packet;
 import cui.tcs.graphsim.engine.PacketForwarder;
 import cui.tcs.graphsim.engine.SimulationContext;
-import cui.tcs.graphsim.graph.instances.geometric.GeometricNodeImpl;
 
 /**
  * Simple random walk node process just forwards the packets to a neighboring
@@ -59,6 +58,9 @@ public class RandomWalkProcess implements NodeProcess {
 	public void handlePacket(Packet packet) {
 		System.out.println("Receiving a packet from " + packet.getSource() + " to" + packet.getDestination());
 		packetQueue.add(packet);
+		
+		Thread packetHandler=new Thread(new PacketHandler(this,packetQueue,context));
+		packetHandler.start();
 	}
 	
 	public Vertex getNode(){

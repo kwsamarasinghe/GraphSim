@@ -17,14 +17,14 @@ public class Engine {
 	private PacketForwarder packetForwarder;
 
 	// Simulation context
-	private SimulationContext simulationContext;
+	private static SimulationContext simulationContext;
 
 	/**
 	 * @param graph - underlying graph
 	 */
 	public Engine(Graph graph) {
 		// initializes the packet forwarder
-		packetForwarder = new PacketForwarder(simulationContext);
+		packetForwarder = new PacketForwarder();
 		
 		//Initializes the context
 		simulationContext = new SimulationContext(packetForwarder);
@@ -51,7 +51,7 @@ public class Engine {
 		}
 	}
 
-	public SimulationContext getContext() {
+	public static SimulationContext getContext() {
 		return simulationContext;
 	}
 

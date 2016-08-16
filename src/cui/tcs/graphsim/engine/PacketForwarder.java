@@ -11,13 +11,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class PacketForwarder implements Runnable{
 
-	//Graph
-	private SimulationContext context;
-	
 	//Packet queue
 	private ConcurrentLinkedQueue<Packet> packetQueue;
 	
-	public PacketForwarder(SimulationContext context){
+	public PacketForwarder(){
 		packetQueue = new ConcurrentLinkedQueue<Packet>();
 	}
 
@@ -28,9 +25,10 @@ public class PacketForwarder implements Runnable{
 		
 		while(true){
 			while(!packetQueue.isEmpty()){
-				Packet packet=packetQueue.peek();
+				Packet packet=packetQueue.remove();
 				
 				int nextHop=packet.getNextHop();
+				SimulationContext context=Engine.getContext();
 				NodeProcess nextHopProcess=context.getProcess(nextHop);
 				
 				nextHopProcess.handlePacket(packet);
