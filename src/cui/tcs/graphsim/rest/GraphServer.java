@@ -1,6 +1,5 @@
 package cui.tcs.graphsim.rest;
 
-import org.apache.log4j.Logger;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
 

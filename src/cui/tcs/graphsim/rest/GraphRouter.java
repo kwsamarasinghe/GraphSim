@@ -5,6 +5,7 @@ import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
 import cui.tcs.graphsim.graph.ConnectivityGraph;
+import cui.tcs.graphsim.rest.resources.GraphResource;
 
 public class GraphRouter extends Application {
 	
@@ -18,7 +19,11 @@ public class GraphRouter extends Application {
 	public Restlet createInboundRoot() {
 		Router router = new Router(getContext());
 		router.getContext().getAttributes().put("graph", graph);
-		router.attach("/graph", GraphResource.class);
+		
+		GraphResource graphResource=new GraphResource(router.getContext());
+		router.attach("/graph", graphResource.graph);
 		return router;
 	}
 }
+
+
