@@ -22,6 +22,7 @@ public class GraphRouter extends Application {
 		
 		GraphResource graphResource=new GraphResource(router.getContext());
 		router.attach("/graph", graphResource.graph);
+		router.attach("/graphupdate", graphResource.graphUpdate);
 		return router;
 	}
 }

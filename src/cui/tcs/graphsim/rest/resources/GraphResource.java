@@ -43,6 +43,13 @@ public class GraphResource{
 		}
 	};
 	
+	public Restlet graphUpdate = new Restlet() {
+	
+		@Override
+		public void handle(Request request, Response response){
+			response.setEntity("update",MediaType.APPLICATION_ALL);
+		}
+	};	
 	
 	public GraphResource(Context context){
 		this.context=context;
